@@ -1,0 +1,41 @@
+Luke's Assembly Language 2.0
+LAL2.0
+
+
+Memory:
+Flip-Flops in CPU: a, b
+SRAM: X * 16 bit memory (X is user defined)
+
+
+			codes and operations
+			
+#				#blah blah			comment
+func			func name			function naming
+lda				lda x				load memory[x] into a
+				lda vx				load value x into a
+ldb				ldb x				load memory[x] into b
+				ldb vx				load value b into b
+ldafb			ldafb				load memory[b] into a
+bisa			bisa				b = a
+sta				sta x				store a in memory[x]
+stb				stb x				store b in memory[x]
+staib			staib				stora a in memory[b]
+goto			goto n				set PC to n
+goa				goa					set PC to a
+ifa				ifa n				if a != 0, set PC to n
+ifga			ifga x				if a != 0, set PC to memory[x]
+ifan			ifan n				if a is 0, set PC to n
+ifgan			ifgan x				if a is 0, set PC to memory[x]
+altb			altb				if a < b -> a = 1, else a = 0
+aeqb			aeqb				if a == b -> a = 1, else a = 0
+agtb			agtb				if a > b -> a = 1, else a = 0
+add				add					a = a+b
+inca			inca				a = a+1
+deca			deca				a = a-1
+sub				sub					a = a-b
+or				or					a = a|b
+and				and					a = a&b
+xor				xor					a = a^b
+not				not					a = !a
+shla			shla x				shift a left by x bits
+shra			shra x				shift a right by x bits

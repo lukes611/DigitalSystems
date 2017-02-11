@@ -1,0 +1,43 @@
+SUBDESIGN SEVENSEGCODER(
+NUM[3..0]:INPUT;
+OUTV[6..0]:OUTPUT;
+)
+BEGIN
+	IF NUM[3..0] == 0 THEN
+		OUTV[0..6] = (0,0,0,0,0,0,1);
+	ELSIF NUM[3..0] == 1 THEN
+		OUTV[0..6] = (1,0,0,1,1,1,1);
+	ELSIF NUM[3..0] == 2 THEN
+		OUTV[0..6] = (0,0,1,0,0,1,0);
+	ELSIF NUM[3..0] == 3 THEN
+		OUTV[0..6] = (0,0,0,0,1,1,0);
+	ELSIF NUM[3..0] == 4 THEN
+		OUTV[0..6] = (1,0,0,1,1,0,0);
+	ELSIF NUM[3..0] == 5 THEN
+		OUTV[0..6] = (0,1,0,0,1,0,0);
+	ELSIF NUM[3..0] == 6 THEN
+		OUTV[0..6] = (0,1,0,0,0,0,0);
+	ELSIF NUM[3..0] == 7 THEN
+		OUTV[0..6] = (0,0,0,1,1,1,1);
+	ELSIF NUM[3..0] == 8 THEN
+		OUTV[0..6] = (0,0,0,0,0,0,0);
+	ELSIF NUM[3..0] == 9 THEN
+		OUTV[0..6] = (0,0,0,0,1,0,0);
+	ELSIF NUM[3..0] == 10 THEN
+		OUTV[0..6] = (0,0,0,1,0,0,0);
+	ELSIF NUM[3..0] == 11 THEN
+		OUTV[0..6] = (1,1,0,0,0,0,0);
+	ELSIF NUM[3..0] == 12 THEN
+		OUTV[0..6] = (0,1,1,0,0,0,1);
+	ELSIF NUM[3..0] == 13 THEN
+		OUTV[0..6] = (1,0,0,0,0,1,0);
+	ELSIF NUM[3..0] == 14 THEN
+		OUTV[0..6] = (0,1,1,0,0,0,0);
+	ELSIF NUM[3..0] == 15 THEN
+		OUTV[0..6] = (0,1,1,1,0,0,0);
+	ELSE	
+		OUTV[6..0] = (1,1,1,1,1,1,1);
+	END IF;
+
+
+END;

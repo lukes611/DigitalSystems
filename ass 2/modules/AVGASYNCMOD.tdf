@@ -1,0 +1,42 @@
+INCLUDE "AVGACOUNTER.inc";
+
+SUBDESIGN AVGASYNCMOD(
+	clk25_in : INPUT;
+	x_pos[18..0] : OUTPUT;
+	y_pos[18..0] : OUTPUT;
+	av_sync, ah_sync :OUTPUT;
+	send_data :OUTPUT;
+)
+VARIABLE
+syncCounterV :AVGACOUNTER;
+syncCounterH :AVGACOUNTER;
+data_out :NODE;
+BEGIN
+	IF syncCounterH.count_out[] == 639 THEN
+		syncCounterV.clk_in = B"1";
+	ELSE
+		syncCounterV.clk_in = B"0";
+	END IF;
+	syncCounterV.reset = B"0";
+	syncCounterV.max_num[] = 520;
+	syncCounterV.set_maximum = B"1";
+	
+	syncCounterH.clk_in = clk25_in;
+	syncCounterH.reset = B"0";
+	syncCounterH.max_num[] = 799;
+	syncCounterH.set_maximum = B"1";
+	
+	
+	data_out = (syncCounterV.count_out[] >= 41 AND syncCounterV.count_out[] < 521 AND syncCounterH.count_out[] >= 160 AND syncCounterH.count_out[] < 800);
+	av_sync = (syncCounterV.count_out[] >= 10 AND syncCounterV.count_out[] < 12);
+	ah_sync = (syncCounterH.count_out[] >= 16 AND syncCounterH.count_out[] < 112);
+	send_data = data_out;
+	IF data_out == B"1" THEN
+		x_pos[] = syncCounterH.count_out[] - 160;
+		y_pos[] = syncCounterV.count_out[] - 41;
+	ELSE
+		x_pos[] = 0;
+		y_pos[] = 0;
+	END IF;
+	
+END;

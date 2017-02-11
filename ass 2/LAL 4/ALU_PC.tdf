@@ -1,0 +1,153 @@
+subdesign ALU_PC(
+	OPCODE[4..0] :INPUT;
+	INVAL[31..0] :INPUT;
+	RA_IN[31..0] :INPUT;
+	RB_IN[31..0] :INPUT;
+	PC_IN[31..0] :INPUT;
+	
+	RA_OUT[31..0] :OUTPUT;
+	RB_OUT[31..0] :OUTPUT;
+	PC_OUT[31..0] :OUTPUT;
+)
+begin
+	defaults
+	RA_OUT[31..0] = RA_IN[31..0];
+	RB_OUT[31..0] = RB_IN[31..0];
+	PC_OUT[31..0] = PC_IN[31..0] + 1;
+	end defaults;
+
+	if OPCODE[] == 9 then
+		RB_OUT[31..0] = RA_IN[31..0];
+	elsif OPCODE[] == 10 then
+		PC_OUT[31..0] = INVAL[31..0];
+	elsif OPCODE[] == 11 then
+		PC_OUT[31..0] = RA_IN[31..0];
+	elsif OPCODE[] == 12 and RA_IN[31..0] != 0 then
+		PC_OUT[31..0] = INVAL[31..0];
+	elsif OPCODE[] == 13 and RA_IN[31..0] == 0 then
+		PC_OUT[31..0] = INVAL[31..0];
+	elsif OPCODE[] == 14 then
+		if RA_IN[31..0] < RB_IN[31..0] then
+			RA_OUT[31..0] = 1;
+		else
+			RA_OUT[31..0] = 0;
+		end if;
+	elsif OPCODE[] == 15 then
+		if RA_IN[31..0] == RB_IN[31..0] then
+			RA_OUT[31..0] = 1;
+		else
+			RA_OUT[31..0] = 0;
+		end if;
+	elsif OPCODE[] == 16 then
+		if RA_IN[31..0] > RB_IN[31..0] then
+			RA_OUT[31..0] = 1;
+		else
+			RA_OUT[31..0] = 0;
+		end if;
+	elsif OPCODE[] == 17 then
+		RA_OUT[31..0] = RA_IN[31..0] + RB_IN[31..0];
+	elsif OPCODE[] == 18 then
+		RA_OUT[31..0] = RA_IN[31..0] + 1;
+	elsif OPCODE[] == 19 then
+		RA_OUT[31..0] = RA_IN[31..0] - 1;		
+	elsif OPCODE[] == 20 then
+		RA_OUT[31..0] = RA_IN[31..0] - RB_IN[31..0];
+	elsif OPCODE[] == 21 then
+		RA_OUT[31..0] = RA_IN[31..0] # RB_IN[31..0];
+	elsif OPCODE[] == 22 then
+		RA_OUT[31..0] = RA_IN[31..0] & RB_IN[31..0];
+	elsif OPCODE[] == 23 then
+		RA_OUT[31..0] = RA_IN[31..0] ^ RB_IN[31..0];
+	elsif OPCODE[] == 24 then
+		RA_OUT[31..0] = ~RA_IN[31..0];
+	elsif OPCODE[] == 25 then
+		if INVAL[31..0] == 1 then
+			RA_OUT[31..0] = (RA_IN[30..0], GND);
+		elsif INVAL[31..0] == 2 then
+			RA_OUT[31..0] = (RA_IN[29..0], GND, GND);
+		elsif INVAL[31..0] == 3 then
+			RA_OUT[31..0] = (RA_IN[28..0], GND, GND, GND);
+		elsif INVAL[31..0] == 4 then
+			RA_OUT[31..0] = (RA_IN[27..0], GND, GND, GND, GND);
+		elsif INVAL[31..0] == 5 then
+			RA_OUT[31..0] = (RA_IN[26..0], GND, GND, GND, GND, GND);
+		elsif INVAL[31..0] == 6 then
+			RA_OUT[31..0] = (RA_IN[25..0], GND, GND, GND, GND, GND, GND);
+		elsif INVAL[31..0] == 7 then
+			RA_OUT[31..0] = (RA_IN[24..0], GND, GND, GND, GND, GND, GND, GND);
+		elsif INVAL[31..0] == 8 then
+			RA_OUT[31..0] = (RA_IN[23..0], GND, GND, GND, GND, GND, GND, GND, GND);
+		elsif INVAL[31..0] == 9 then
+			RA_OUT[31..0] = (RA_IN[22..0], GND, GND, GND, GND, GND, GND, GND, GND, GND);
+		elsif INVAL[31..0] == 10 then
+			RA_OUT[31..0] = (RA_IN[21..0], GND, GND, GND, GND, GND, GND, GND, GND, GND, GND);
+		elsif INVAL[31..0] == 11 then
+			RA_OUT[31..0] = (RA_IN[20..0], GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND);
+		elsif INVAL[31..0] == 12 then
+			RA_OUT[31..0] = (RA_IN[19..0], GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND);
+		elsif INVAL[31..0] == 13 then
+			RA_OUT[31..0] = (RA_IN[18..0], GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND);
+		elsif INVAL[31..0] == 14 then
+			RA_OUT[31..0] = (RA_IN[17..0], GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND);
+		elsif INVAL[31..0] == 15 then
+			RA_OUT[31..0] = (RA_IN[16..0], GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND);
+		elsif INVAL[31..0] == 16 then
+			RA_OUT[31..0] = (RA_IN[15..0], GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND);
+		elsif INVAL[31..0] == 17 then
+			RA_OUT[31..0] = (RA_IN[14..0], GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND);
+		elsif INVAL[31..0] == 18 then
+			RA_OUT[31..0] = (RA_IN[13..0], GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND);
+		elsif INVAL[31..0] == 19 then
+			RA_OUT[31..0] = (RA_IN[12..0], GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND);
+		elsif INVAL[31..0] == 20 then
+			RA_OUT[31..0] = (RA_IN[11..0], GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND);
+		elsif INVAL[31..0] == 21 then
+			RA_OUT[31..0] = (RA_IN[10..0], GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND);
+		end if;
+	elsif OPCODE[] == 26 then
+		if INVAL[31..0] == 1 then
+			RA_OUT[31..0] = (GND, RA_IN[31..1]);
+		elsif INVAL[31..0] == 2 then
+			RA_OUT[31..0] = (GND, GND, RA_IN[31..2]);
+		elsif INVAL[31..0] == 3 then
+			RA_OUT[31..0] = (GND, GND, GND, RA_IN[31..3]);
+		elsif INVAL[31..0] == 4 then
+			RA_OUT[31..0] = (GND, GND, GND, GND, RA_IN[31..4]);
+		elsif INVAL[31..0] == 5 then
+			RA_OUT[31..0] = (GND, GND, GND, GND, GND, RA_IN[31..5]);
+		elsif INVAL[31..0] == 6 then
+			RA_OUT[31..0] = (GND, GND, GND, GND, GND, GND, RA_IN[31..6]);
+		elsif INVAL[31..0] == 7 then
+			RA_OUT[31..0] = (GND, GND, GND, GND, GND, GND, GND, RA_IN[31..7]);
+		elsif INVAL[31..0] == 8 then
+			RA_OUT[31..0] = (GND, GND, GND, GND, GND, GND, GND, GND, RA_IN[31..8]);
+		elsif INVAL[31..0] == 9 then
+			RA_OUT[31..0] = (GND, GND, GND, GND, GND, GND, GND, GND, GND, RA_IN[31..9]);
+		elsif INVAL[31..0] == 10 then
+			RA_OUT[31..0] = (GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, RA_IN[31..10]);
+		elsif INVAL[31..0] == 11 then
+			RA_OUT[31..0] = (GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, RA_IN[31..11]);
+		elsif INVAL[31..0] == 12 then
+			RA_OUT[31..0] = (GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, RA_IN[31..12]);
+		elsif INVAL[31..0] == 13 then
+			RA_OUT[31..0] = (GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, RA_IN[31..13]);
+		elsif INVAL[31..0] == 14 then
+			RA_OUT[31..0] = (GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, RA_IN[31..14]);
+		elsif INVAL[31..0] == 15 then
+			RA_OUT[31..0] = (GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, RA_IN[31..15]);
+		elsif INVAL[31..0] == 16 then
+			RA_OUT[31..0] = (GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, RA_IN[31..16]);
+		elsif INVAL[31..0] == 17 then
+			RA_OUT[31..0] = (GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, RA_IN[31..17]);
+		elsif INVAL[31..0] == 18 then
+			RA_OUT[31..0] = (GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, RA_IN[31..18]);
+		elsif INVAL[31..0] == 19 then
+			RA_OUT[31..0] = (GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, RA_IN[31..19]);
+		elsif INVAL[31..0] == 20 then
+			RA_OUT[31..0] = (GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, RA_IN[31..20]);
+		elsif INVAL[31..0] == 21 then
+			RA_OUT[31..0] = (GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, RA_IN[31..21]);
+		end if;
+	end if;
+	
+end;

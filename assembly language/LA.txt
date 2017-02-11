@@ -1,0 +1,50 @@
+Assembly Language LA by Luke Lincoln
+
+Memory:
+Flip-Flops/SRAM: a, b, c
+DRAM/Main-Memory: X * 8 bit memory (X is user defined)
+
+*-----------------------------------------------------------------------*
+|	Codes & Operations													|
+*-----------------------------------------------------------------------*
+|	op/code 	usage		description									|
+|	lda			'lda x' 	load memory location x to register a		|
+|				'lda vx' 	load value x into register a				|
+|	ldb			'ldb x' 	load memory location x to register b		|
+|				'ldb vx' 	load value x into register b				|
+|	stc			'stc x'		store register c into memory location x		|
+|	goto		'goto x'	set program counter to x					|
+|	if			'if x'		if register c != 0, set program counter		|
+|							to x										|
+|	add			'add'		c = a + b									|	
+|	sub			'sub'		c = a - b									|	
+|	or			'or'		c = a OR b (bit-wise)						|
+|	and			'and'		c = a AND b (bit-wise)						|
+|	xor			'xor'		c = a XOR b (bit-wise)						|	
+|	not			'not'		c = NOT(a) (bit-wise)						|
+|																		|	
+*-----------------------------------------------------------------------*
+
+Multiplier Program Example:
+lda v4
+ldb v0
+add
+stc 5
+lda v5
+ldb v0
+add
+stc 1
+--begin multiplication function
+lda 5
+ldb 0
+add
+stc 0
+lda 1
+ldb v1
+sub
+stc 1
+lda 1
+ldb 1
+add
+if 9
+end

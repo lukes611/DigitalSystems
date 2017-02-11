@@ -1,0 +1,378 @@
+lda northollor
+sta 72
+lda v50
+ldb v70
+sta 59
+stb 60
+lda v500
+ldb v400
+sta 61
+stb 62
+goto lineDrawerFunctionPart1
+func orthollor
+end
+#lineDrawerFunctionPart1
+func lineDrawerFunctionPart1
+#input x1, y1, x2, y2
+#uses [59 - 72]
+#59:x1, 60:y1, 61:x2, 62:y2, 63:ox, 64:oy,
+#xd:65, yd:66, absxd:67,  absyd:68, maxd:69,
+#incx:70, incy:71, 72:nextlocation
+lda 59
+sta 63
+lda 60
+sta 64
+lda 61
+ldb 59
+sub
+sta 65
+lda 62
+ldb 60
+sub
+sta 66
+#now get abs of xd and yd and put it in abs(x/y)d
+lda 65
+sta 35
+lda nafter1stABSinlineDrawerFunctionPart1
+sta 37
+goto absoluteVal
+func after1stABSinlineDrawerFunctionPart1
+lda 36
+sta 67
+lda 66
+sta 35
+lda nafter2ndABSinlineDrawerFunctionPart1
+sta 37
+goto absoluteVal
+func after2ndABSinlineDrawerFunctionPart1
+lda 36
+sta 68
+#calculate max(absxd, absyd)
+lda 67
+ldb 68
+sta 38
+stb 39
+lda ninDrawerFunctionPart1afterMaxfunc
+sta 41
+goto maximumVal
+func inDrawerFunctionPart1afterMaxfunc
+lda 40
+sta 69
+#if maxd == 0 return
+lda 69
+ldb v0
+aeqb
+ifa exitLineDrawerP1
+#shift xd left by 10
+lda 65
+shla 10
+sta 65
+lda 66
+shla 10
+sta 66
+#do the first division function calculating incx
+lda 65
+sta 42
+ldb 69
+stb 43
+lda nafterCalcIncX
+sta 45
+goto divider_Function2
+func afterCalcIncX
+lda 44
+shra 10
+sta 70
+#do the second division function calculating incx
+lda 66
+sta 42
+ldb 69
+stb 43
+lda nafterCalcIncY
+sta 45
+goto divider_Function2
+func afterCalcIncY
+lda 44
+shra 10
+sta 71
+lda 65
+shra 10
+sta 65
+lda 66
+shra 10
+sta 66
+lda v0
+sta 59
+sta 60
+#now pass to the looper function
+lda nexitLineDrawerP1
+sta 86
+lda 63
+sta 73
+lda 64
+sta 74
+lda 70
+sta 77
+lda 71
+sta 78
+lda 65
+sta 82
+lda 66
+sta 83
+lda 59
+ldb 60
+sta 84
+stb 85
+goto lineDrawerLoopA
+func exitLineDrawerP1
+lda 72
+goa
+end
+#lineDrawerLoopA
+func lineDrawerLoopA
+#uses []
+#input x1, y1, ox, oy, incx, incy, xd, yd
+#73:ox, 74:oy, 75:x, 76:y, 77:incx, 78:incy, 79:l1, 80:l2, 81:l3, 82:xd,
+#83:yd, 84:x1, 85:y1, 86:nextLocation
+func loopRestartlineDrawerLoopA
+lda 84
+shra 10
+sta 75
+lda 85
+shra 10
+sta 76
+lda 75
+ldb 73
+add
+sta 75
+lda 76
+ldb 74
+add
+sta 76
+lda nAfterPixelSetinlineDrawerLoopA
+sta 49
+lda v255
+sta 48
+lda 75
+sta 46
+lda 76
+sta 47
+goto setPixelF
+func AfterPixelSetinlineDrawerLoopA
+lda 84
+ldb 77
+add
+sta 84
+lda 85
+ldb 78
+add
+sta 85
+lda nafterLogicalEndinDrawerLoopA
+sta 58
+lda 75
+ldb 73
+sub
+sta 50
+lda 82
+sta 51
+lda 76
+ldb 74
+sub
+sta 52
+lda 83
+sta 53
+goto logicalEnd
+func afterLogicalEndinDrawerLoopA
+lda 57
+ifa exitDrawerLoopA
+goto loopRestartlineDrawerLoopA
+func exitDrawerLoopA
+lda 86
+goa
+end
+#logicalEndFunction
+func logicalEnd
+#uses memory [50 - 54]
+INPUT is x, xd, y, y2
+#50:x, 51:xd, 52:y, 53:yd, 54:l1, 55:l2, 56:l3, 57:ans, 58:nextLocation
+lda 51
+ldb 50
+sub
+sta 35
+lda nafterABS1LogicalEndFunc
+sta 37
+goto absoluteVal
+func afterABS1LogicalEndFunc
+lda 36
+sta 54
+lda 53
+ldb 52
+sub
+sta 35
+lda nafterABS2LogicalEndFunc
+sta 37
+goto absoluteVal
+func afterABS2LogicalEndFunc
+lda 36
+sta 55
+lda 54
+ldb 55
+add
+ldb v4
+altb
+sta 57
+lda 58
+goa
+end
+func setPixelF
+#uses [46 - 49]
+#(46,x) (47,y) (48,dval) (49,nextLocation)
+lda nMultiInSPA
+sta 34
+lda 47
+sta 30
+lda v640
+sta 31
+goto multiplier
+func MultiInSPA
+ldb 33
+lda 46
+add
+bisa
+lda 48
+setim
+lda 49
+goa
+end
+func divider_Function2
+#(x / y)
+# uses memory [42 - 45]
+# 42:x, 43:y, 44:ans, 45:next location
+lda 42
+shla 10
+sta 42
+ldb 43
+stb 29
+lda naftergetLUTinDividerF2
+sta 27
+goto getLUTVal
+func aftergetLUTinDividerF2
+lda 28
+sta 31
+lda 42
+sta 30
+lda naftermultiplierDividerFuncF2
+sta 34
+goto multiplier
+func aftermultiplierDividerFuncF2
+lda 33
+shra 10
+sta 44
+lda 45
+goa
+end
+#division function
+func divider_Function
+#(x / y)
+# uses memory [23 - 26]
+# 24 : x, 25 : y, 26 : ans, 23 : next location
+lda 24
+shla 10
+sta 24
+ldb 25
+stb 29
+lda naftergetLUTinDivider
+sta 27
+goto getLUTVal
+func aftergetLUTinDivider
+lda 28
+sta 31
+lda 24
+sta 30
+lda naftermultiplierDividerFunc
+sta 34
+goto multiplier
+func aftermultiplierDividerFunc
+lda 33
+shra 20
+sta 26
+lda 23
+goa
+end
+#grab the divisor from LUT
+func getLUTVal
+#memory used [27 - 29]
+# 29: denomenator, 28: outputvalue, 27: next line
+#get memory location of memLocation, store it in output value
+lda 29
+ldb v300
+add
+bisa
+ldafb
+sta 28
+lda 27
+goa
+end
+func multiplier
+#uses memory [30 - 34]
+#30:x, 31:y, 32:looper, 33:ans, 34:nextLocation
+lda v0
+sta 32
+sta 33
+ldb 31
+aeqb
+ifan loop_in_multiplier
+goto end_multiplier
+func loop_in_multiplier
+#add em
+lda 33
+ldb 30
+add
+sta 33
+#increment loop i
+lda 32
+inca
+sta 32
+ldb 31
+altb
+ifa loop_in_multiplier
+func end_multiplier
+lda 34
+goa
+end
+func absoluteVal
+#uses memory [35 - 37]
+#35:inp, 36:ans, 37:nextLocation
+lda 35
+ldb v0
+altb
+ifa continueWithAbsValFunc
+lda 35
+sta 36
+lda 37
+goa
+func continueWithAbsValFunc
+lda 35
+not
+inca
+sta 36
+lda 37
+goa
+end
+#max function
+func maximumVal
+# returns max(a,b)
+#uses memory [38 - ]
+# 38:a,  39:b,    40:ans,     41:nextLocation
+lda 38
+ldb 39
+agtb
+ifa amorethanb
+stb 40
+lda 41
+goa
+func amorethanb
+lda 38
+sta 40
+lda 41
+goa
+end

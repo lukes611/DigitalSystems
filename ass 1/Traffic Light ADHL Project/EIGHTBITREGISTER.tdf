@@ -1,0 +1,18 @@
+SUBDESIGN EIGHTBITREGISTER(
+CLK, CLR :INPUT;
+OUTN[7..0] :OUTPUT;
+)
+VARIABLE
+Inter[7..0] :JKFF;
+abc[7..0] :NODE;
+BEGIN
+Inter[].clk = CLK;
+Inter[].clrn = !CLR;
+
+abc[] = Inter[].q + 1;
+Inter[].j = abc[];
+Inter[].k = !abc[];
+
+OUTN[] = Inter[].q;
+
+END;

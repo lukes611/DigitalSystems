@@ -1,0 +1,24 @@
+SUBDESIGN AVGACOUNTER(
+clk_in :INPUT;
+set_maximum :INPUT;
+max_num[18..0] :INPUT;
+count_out[18..0] :OUTPUT;
+)
+VARIABLE
+ffs[18..0] : JKFF;
+BEGIN
+	ffs[].clk = clk_in;
+	IF set_maximum == B"1" THEN
+			IF ffs[].q == max_num[] THEN
+				ffs[].j = 0;
+				ffs[].k = 1;
+			ELSE
+				ffs[].j = ffs[].q + 1;
+				ffs[].k = !(ffs[].q + 1);
+			END IF;
+	ELSE
+		ffs[].j = ffs[].q + 1;
+		ffs[].k = !(ffs[].q + 1);
+	END IF;
+	count_out[] = ffs[].q;
+END;

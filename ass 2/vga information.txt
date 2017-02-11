@@ -1,0 +1,25 @@
+VGA: Video Graphics Array
+w = 640
+h = 480
+
+Horizontal Information
+pixel clock frequency: 25.175 MHz
+horizonal frequency: 31.4686 kHz
+Horizontal pixels: 640
+time for each line: 31.77 us
+A front porch 0.94 us
+B sync pulse length: 3.77 us
+C Back Porch: 1.89 us
+D Active video: 25.17 us
+Horizontal sync order: ABCD
+
+vertical lines: 480
+vertical frequency 59.94 Hz
+E front porch: 0.35 ms
+F Sync pulse length: 9.06 ms
+G Back Porch: 1.02 ms
+H Active Video: 15.25 ms
+
+4 bits per colour component (R,G,B)
+
+640 = 25.17 / clock per

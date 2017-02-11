@@ -1,0 +1,39 @@
+INCLUDE "TIMINGCONTROLCIRCUIT";
+INCLUDE "TRAFFICLIGHTCONTROLLER";
+INCLUDE "SEVENSEGCODER";
+
+SUBDESIGN TRAFFICLIGHTPROJECT(
+CLOCK_50 :INPUT;
+SW[0] :INPUT;
+LEDR[2..0] :OUTPUT;
+LEDG[2..0] :OUTPUT;
+HEX0[6..0] :OUTPUT;
+HEX1[6..0] :OUTPUT;
+)
+VARIABLE
+hd1 :SEVENSEGCODER;
+hd2 :SEVENSEGCODER;
+controller :TRAFFICLIGHTCONTROLLER;
+timer : TIMINGCONTROLCIRCUIT;
+BEGIN
+
+timer.CLOCKINP = CLOCK_50;
+hd1.NUM[] = timer.OUTCOUNT[3..0];
+hd2.NUM[] = timer.OUTCOUNT[7..4];
+
+controller.STATE[] = timer.STATE[];
+controller.N = SW[0];
+timer.RESET = controller.RESET;
+
+HEX0[] = hd1.OUTV[];
+HEX1[] = hd2.OUTV[];
+LEDR[0] = controller.AG;
+LEDR[1] = controller.AY;
+LEDR[2] = controller.AR;
+
+LEDG[0] = controller.BG;
+LEDG[1] = controller.BY;
+LEDG[2] = controller.BR;
+
+
+END;

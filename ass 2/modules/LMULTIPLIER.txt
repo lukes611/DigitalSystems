@@ -1,0 +1,163 @@
+SUBDESIGN LMULTIPLIER(
+	inp_a[18..0] :INPUT;
+	inp_b[18..0] :INPUT;
+	out_val[18..0] :OUTPUT;
+)
+VARIABLE
+a[18..0] :NODE;
+b[18..0] :NODE;
+c[18..0] :NODE;
+d[18..0] :NODE;
+e[18..0] :NODE;
+f[18..0] :NODE;
+g[18..0] :NODE;
+h[18..0] :NODE;
+i[18..0] :NODE;
+j[18..0] :NODE;
+k[18..0] :NODE;
+l[18..0] :NODE;
+m[18..0] :NODE;
+n[18..0] :NODE;
+o[18..0] :NODE;
+p[18..0] :NODE;
+q[18..0] :NODE;
+r[18..0] :NODE;
+s[18..0] :NODE;
+
+BEGIN
+--one
+IF inp_a[0] == B"1" THEN
+	a[] = inp_a[];
+ELSE
+	a[] = 0;
+END IF;
+
+--2
+IF inp_a[1] == B"1" THEN
+	b[] = (inp_a[17..0], B"0");
+ELSE
+	b[] = 0;
+END IF;
+
+--3
+IF inp_a[1] == B"1" THEN
+	c[] = (inp_a[16..0], B"00");
+ELSE
+	c[] = 0;
+END IF;
+
+--4
+IF inp_a[1] == B"1" THEN
+	d[] = (inp_a[15..0], B"000");
+ELSE
+	d[] = 0;
+END IF;
+
+--5
+IF inp_a[1] == B"1" THEN
+	e[] = (inp_a[14..0], B"0000");
+ELSE
+	e[] = 0;
+END IF;
+
+--6
+IF inp_a[1] == B"1" THEN
+	f[] = (inp_a[13..0], B"00000");
+ELSE
+	f[] = 0;
+END IF;
+
+--7
+IF inp_a[1] == B"1" THEN
+	g[] = (inp_a[12..0], B"000000");
+ELSE
+	g[] = 0;
+END IF;
+
+--8
+IF inp_a[1] == B"1" THEN
+	h[] = (inp_a[11..0], B"0000000");
+ELSE
+	h[] = 0;
+END IF;
+
+--9
+IF inp_a[1] == B"1" THEN
+	i[] = (inp_a[10..0], B"00000000");
+ELSE
+	i[] = 0;
+END IF;
+
+--10
+IF inp_a[1] == B"1" THEN
+	j[] = (inp_a[9..0], B"000000000");
+ELSE
+	j[] = 0;
+END IF;
+
+--11
+IF inp_a[1] == B"1" THEN
+	k[] = (inp_a[8..0], B"0000000000");
+ELSE
+	k[] = 0;
+END IF;
+
+--12
+IF inp_a[1] == B"1" THEN
+	l[] = (inp_a[7..0], B"00000000000");
+ELSE
+	l[] = 0;
+END IF;
+
+--13
+IF inp_a[1] == B"1" THEN
+	m[] = (inp_a[6..0], B"0000000000000");
+ELSE
+	m[] = 0;
+END IF;
+
+--14
+IF inp_a[1] == B"1" THEN
+	n[] = (inp_a[5..0], B"00000000000000");
+ELSE
+	n[] = 0;
+END IF;
+
+--15
+IF inp_a[1] == B"1" THEN
+	o[] = (inp_a[4..0], B"000000000000000");
+ELSE
+	o[] = 0;
+END IF;
+
+--16
+IF inp_a[1] == B"1" THEN
+	p[] = (inp_a[3..0], B"0000000000000000");
+ELSE
+	p[] = 0;
+END IF;
+
+--17
+IF inp_a[1] == B"1" THEN
+	q[] = (inp_a[2..0], B"0000000000000000");
+ELSE
+	q[] = 0;
+END IF;
+
+--18
+IF inp_a[1] == B"1" THEN
+	r[] = (inp_a[1..0], B"00000000000000000");
+ELSE
+	r[] = 0;
+END IF;
+
+--19
+IF inp_a[1] == B"1" THEN
+	s[] = (inp_a[0], B"000000000000000000");
+ELSE
+	s[] = 0;
+END IF;
+
+out_val[] = a[] + b[] + c[] + d[] + e[] + f[] + g[] + h[] + i[] + j[] + k[] + l[] + m[] + n[] + o[] + p[] + q[] + r[] + s[];
+
+END;

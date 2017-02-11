@@ -1,0 +1,59 @@
+INCLUDE "AVGACOUNTER.inc";
+
+SUBDESIGN AVGASYNCMOD(
+	clk25_in : INPUT;
+	x_pos[18..0] : OUTPUT;
+	y_pos[18..0] : OUTPUT;
+	v_snyc :OUTPUT;
+	y_sync :OUTPUT;
+	send_data :OUTPUT;
+)
+VARIABLE
+syncCounterV :AVGACOUNTER;
+syncCounterH :AVGACOUNTER;
+x_pos_Counter :AVGACOUNTER;
+y_pos_Counter :AVGACOUNTER;
+state : JKFF;
+BEGIN
+	state.j = B"1";
+	state.k = B"1";
+
+	syncCounterV.clk_in = clk25_in;
+	syncCounterV.reset = state;
+	syncCounterV.max_num[] = 33599;
+	syncCounterV.set_maximum = B"1";
+	
+	syncCounterH.clk_in = clk25_in;
+	syncCounterH.reset = !state;
+	syncCounterH.max_num[] = 799;
+	syncCounterH.set_maximum = B"1";
+	
+	x_pos_Counter.clk_in = clk25_in & (syncCounterH.count_out[] >= 160 AND syncCounterH.count_out[] < 800);
+	x_pos_Counter.reset = !state;
+	x_pos_Counter.max_num[] = 639;
+	x_pos_Counter.set_maximum = B"1";
+	
+	y_pos_Counter.clk_in = (x_pos_Counter.count_out[] == 639);
+	y_pos_Counter.reset = B"0";
+	y_pos_Counter.max_num[] = 479;
+	y_pos_Counter.set_maximum = B"1";
+	
+	
+	
+	IF state.q == B"0" THEN
+		IF syncCounterV.count_out[] == 33599 THEN
+			state.clk = B"1";
+		ELSE
+			state.clk = B"0";
+	ELSE
+		IF y_pos_Counter.count_out[] == 479 THEN
+			state.clk = B"1";
+		ELSE
+			state.clk = B"0";
+	END IF;
+	
+	
+	send_data = (syncCounterH.count_out[] >= 160 AND syncCounterH.count_out[] < 800);
+	v_snyc = (syncCounterV.count_out[] >= 8800 AND syncCounterV.count_out[] < 10400);
+	h_snyc = (syncCounterH.count_out[] >= 16 AND syncCounterH.count_out[] < 111);
+	

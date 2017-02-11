@@ -1,0 +1,87 @@
+Lukes Assembly Language 4.0
+Memory:
+Flip-Flops in CPU: a, b
+SRAM: X * 16 bit memory (X is user defined)
+			codes and operations
+			
+
+No. Operations : 28
+OpCode: 5 bits XXXXX
+
+Numerics 32-bits
+Total CodeLen: 40 bits : [5-bit op-code | 32-bit num | 3-bit empty section]
+							(39-35)			(34-3)			(2-0)
+
+OPCODE			Name			Usage				description		
+Others::			
+00000			#				#blah blah			comment
+00001			func			func name			function naming
+11011			end				end					stop execution
+	
+Control/Memory::
+00010			lda				lda x				load memory[x] into a
+								lda vx				load value x into a
+00011			ldb				ldb x				load memory[x] into b
+								ldb vx				load value b into b
+00100			ldafb			ldafb				load memory[b] into a
+00101			sta				sta x				store a in memory[x]
+00110			stb				stb x				store b in memory[x]
+00111			staib			staib				stora a in memory[b]
+01000			setim			setim				store a in image.data[b]
+ALU/PC::
+01001			bisa			bisa				b = a
+01010			goto			goto n				set PC to n
+01011			goa				goa					set PC to a
+01100			ifa				ifa n				if a != 0, set PC to n
+01101			ifan			ifan n				if a is 0, set PC to n
+01110			altb			altb				if a < b -> a = 1, else a = 0
+01111			aeqb			aeqb				if a == b -> a = 1, else a = 0
+10000			agtb			agtb				if a > b -> a = 1, else a = 0
+10001			add				add					a = a+b
+10010			inca			inca				a = a+1
+10011			deca			deca				a = a-1
+10100			sub				sub					a = a-b
+10101			or				or					a = a|b
+10110			and				and					a = a&b
+10111			xor				xor					a = a^b
+11000			not				not					a = !a
+11001			shla			shla x				shift a left by x bits
+11010			shra			shra x				shift a right by x bits
+
+
+Memory Function Mapper:
+
+divider_Function (24,x) (25,y) (26,ans) (23,nextLocation)
+
+getLUTVal (29,denominator) (28,output) (27,nextline)
+
+multiplier (30,x) (31,y) (32,looper) (33,ans) (34,nextLocation)
+
+absoluteVal (35,inp) (36,ans) (37,nextLocation)
+
+maximumlVal (38,a) (39,b) (40,ans) (41,nextLocation)
+
+divider_Function2 (42,x) (43,y) (44,ans) (45,nextLocation)
+
+setPixelF (46,x) (47,y) (48,dval) (49,nextLocation)
+
+logicalEnd (50:x) (51:xd) (52:y) (53:yd) (54:l1) (55:l2) (56:l3) (57:ans) (58:nextLocation)
+
+lineDrawerLoopA (73:ox) (74:oy) (75:x) (76:y) (77:incx) (78:incy) (79:l1) 
+(80:l2) (81:l3) (82:xd) (83:yd) (84:x1) (85:y1) (86:nextLocation)
+
+lineDrawerFunctionPart1 (59:x1) (60:y1) (61:x2) (62:y2) (63:ox) (64:oy)
+(xd:65) (yd:66) (absxd:67) (absyd:68) (maxd:69) (incx:70) (incy:71)
+(72:nextlocation)
+
+screenClear (yax:87) (88:nextLocation)
+
+DrawTriangle (89:x1) (90:y1) (91:x2) (92:y2) (93:x3) (94:y3) (95:ox) (96:oy)
+(xd:97) (yd:98) (absxd:99) (absyd:100) (maxd:101) (incx:102) (incy:103)
+(104:nextlocation)
+
+DrawTriangleLoop (105:ox) (106:oy) (107:x) (108:y) (109:incx) (110:incy) (111:l1) 
+(112:l2) (113:l3) (114:xd) (115:yd) (116:x1) (117:y1)  (118:x3) (119:y3) (120:nextLocation)
+
+
+

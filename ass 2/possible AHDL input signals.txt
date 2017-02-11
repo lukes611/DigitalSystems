@@ -1,0 +1,17 @@
+ALU
+INPUT:
+	opcode
+	a
+	b
+	PC
+OUTPUT:
+	a
+	b
+	PC
+
+CONTROL
+INPUT:
+	opcode
+	a
+	b
+	

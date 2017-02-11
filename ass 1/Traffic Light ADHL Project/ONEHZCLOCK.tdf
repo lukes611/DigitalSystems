@@ -1,0 +1,40 @@
+SUBDESIGN ONEHZCLOCK(
+CLKIN50 :INPUT;
+OUTCLK :OUTPUT;
+)
+VARIABLE
+ff1[25..0] :JKFF;
+BEGIN
+	ff1[].j = VCC;
+	ff1[].K = VCC;
+	ff1[0].clk = !CLKIN50;
+	ff1[1].clk = ff1[0].q;
+	ff1[2].clk = ff1[1].q;
+	ff1[3].clk = ff1[2].q;
+	ff1[4].clk = ff1[3].q;
+	ff1[5].clk = ff1[4].q;
+	ff1[6].clk = ff1[5].q;
+	ff1[7].clk = ff1[6].q;
+	ff1[8].clk = ff1[7].q;
+	ff1[9].clk = ff1[8].q;
+	ff1[10].clk = ff1[9].q;
+	ff1[11].clk = ff1[10].q;
+	ff1[12].clk = ff1[11].q;
+	ff1[13].clk = ff1[12].q;
+	ff1[14].clk = ff1[13].q;
+	ff1[15].clk = ff1[14].q;
+	ff1[16].clk = ff1[15].q;
+	ff1[17].clk = ff1[16].q;
+	ff1[18].clk = ff1[17].q;
+	ff1[19].clk = ff1[18].q;
+	ff1[20].clk = ff1[19].q;
+	ff1[21].clk = ff1[20].q;
+	ff1[22].clk = ff1[21].q;
+	ff1[23].clk = ff1[22].q;
+	ff1[24].clk = ff1[23].q;
+	ff1[25].clk = ff1[24].q;
+	
+	
+	OUTCLK = !ff1[24].q;
+	
+END;

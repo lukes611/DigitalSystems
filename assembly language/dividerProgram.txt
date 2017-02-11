@@ -1,0 +1,80 @@
+lda v10
+ldb v2
+sta 0
+stb 1
+sta 24
+stb 25
+lda v10
+sta 23
+goto divider_Function
+lda 26
+sta 2
+end
+#division function
+func divider_Function
+#(x / y)
+# uses memory [23 - 26]
+# 24 : x, 25 : y, 26 : ans, 23 : next location
+lda 24
+shla 10
+sta 24
+ldb 25
+stb 29
+lda v26
+sta 27
+goto getLUTVal
+lda 28
+sta 31
+lda 24
+sta 30
+lda v33
+sta 34
+goto multiplier
+lda 33
+shra 20
+sta 26
+lda 23
+goa
+end
+#divider program
+func getLUTVal
+#memory used [- 29]
+# 29: denomenator, 28: outputvalue, 27: next line
+#get memory location of memLocation, store it in output value
+lda 29
+ldb v300
+add
+sta 20
+bisa
+ldafb
+sta 28
+lda 27
+goa
+end
+func multiplier
+#uses memory [30 - 34]
+#30:x, 31:y, 32:looper, 33:ans, 34:nextLocation
+lda v0
+sta 32
+sta 33
+ldb 31
+aeqb
+ifan loop_in_multiplier
+goto end_multiplier
+func loop_in_multiplier
+#add em
+lda 33
+ldb 30
+add
+sta 33
+#increment loop i
+lda 32
+inca
+sta 32
+ldb 31
+altb
+ifa loop_in_multiplier
+func end_multiplier
+lda 34
+goa
+end

@@ -1,0 +1,24 @@
+SUBDESIGN TRAFFICLIGHTCONTROLLER(
+STATE[5..0]:INPUT;
+N :INPUT;
+AR, AY, AG, BR, BY, BG, RESET:OUTPUT;
+)
+VARIABLE
+P, Q, R, S, T, U :NODE;
+BEGIN
+P = STATE[0];
+Q = STATE[1];
+R = STATE[2];
+S = STATE[3];
+T = STATE[4];
+U = STATE[5];
+
+AR = (N & P) # (!N & (T # U));
+AY = !N & S;
+AG = !N & (P # Q # R);
+BR = !N & (P # Q # R # S);
+BY = (N & Q) # (!N & U);
+BG = !N & T;
+RESET = N & (!(P # Q));
+
+END;
